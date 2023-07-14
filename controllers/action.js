@@ -1,15 +1,17 @@
 const { MentorSchema, StudentSchema } = require("../models/schema");
 
+
 exports.listPeople = async (req, res) => {
   const students = await StudentSchema.find();
   const mentors = await MentorSchema.find();
   return res.status(200).json({ students: students, mentors: mentors });
 };
+
 exports.listStudentsForMentor = async (req, res) => {
   const mentor_id = req.params.mentor_id;
   const check_mentor = await MentorSchema.findById(mentor_id);
   try {
-    if (!check_mentor) return res.status(400).end("please check mentor id");
+    if (!check_mentor) return res.status(400).end("please check mentors-id");
     const selected_students = await StudentSchema.find({ mentor: mentor_id });
     console.log(`selected_students: ${selected_students}`);
 
@@ -22,6 +24,7 @@ exports.listStudentsForMentor = async (req, res) => {
     res.status(500).send(new Error(err).message);
   }
 };
+
 exports.listMentorsForStudents = async (req, res) => {
   const student_id = req.params.student_id;
   console.log(`student_id: ${student_id}`);
@@ -37,6 +40,7 @@ exports.listMentorsForStudents = async (req, res) => {
     res.status(500).send(new Error(err).message);
   }
 };
+
 
 exports.createMentors = async (req, res) => {
   new_mentor = {
@@ -59,6 +63,7 @@ exports.createMentors = async (req, res) => {
     res.status(500).send(err);
   }
 };
+
 exports.createStudents = async (req, res) => {
   new_student = {
     name: req.body.name,
@@ -80,6 +85,7 @@ exports.createStudents = async (req, res) => {
     res.status(500).send(new Error(err).message);
   }
 };
+
 exports.addStudentForMentor = async (req, res) => {
   const mentor_id = req.params.mentor_id;
   const student_list = req.body.student;
@@ -111,6 +117,7 @@ exports.addStudentForMentor = async (req, res) => {
     res.status(500).send(new Error(err).message);
   }
 };
+
 exports.addMentorForStudent = async (req, res) => {
   const student_id = req.params.student_id;
   const mentor_id = req.params.mentor_id;

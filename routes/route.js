@@ -9,7 +9,7 @@ const {listPeople,
 } = require('../controllers/action')
 
 route.get("/",(req,res)=>{
-    res.status(200).end("welcome to the institue")
+    res.status(200).end("Helo Students")
 })
 
 route.get("/people",listPeople);
